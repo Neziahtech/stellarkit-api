@@ -18,7 +18,11 @@ const accountRouter = require("./routes/account");
 const transactionsRouter = require("./routes/transactions");
 const assetRouter = require("./routes/asset");
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 const streamRouter = require("./routes/stream");
+=======
+const streamPaymentsRouter = require("./routes/streamPayments");
+>>>>>>> Stashed changes
 =======
 const streamPaymentsRouter = require("./routes/streamPayments");
 >>>>>>> Stashed changes
@@ -59,7 +63,11 @@ app.use("/account", accountRouter);
 app.use("/transactions", transactionsRouter);
 app.use("/asset", assetRouter);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 app.use("/stream", streamRouter);
+=======
+app.use("/stream/payments", streamPaymentsRouter);
+>>>>>>> Stashed changes
 =======
 app.use("/stream/payments", streamPaymentsRouter);
 >>>>>>> Stashed changes
