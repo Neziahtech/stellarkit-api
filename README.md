@@ -221,6 +221,54 @@ GET /asset/search?code=USDC
 
 ## 📡 Streaming & WebSockets
 
+### `GET /stream/payments/:id` (SSE)
+Streams real-time payment operations for a Stellar account using [Server-Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events).
+
+Only payment-type operations are forwarded (`payment`, `create_account`, `path_payment_strict_send`, `path_payment_strict_receive`). All other operation types are silently dropped.
+
+**SSE Events:**
+| Event | Description |
+|-------|-------------|
+| `connected` | Emitted once on open — confirms the account being watched |
+| `payment` | Emitted for each incoming payment operation |
+| `error` | Emitted if the Horizon stream encounters an error |
+
+**`payment` event data shape:**
+```json
+{
+  "type": "payment",
+  "id": "op-id",
+  "createdAt": "2026-05-27T10:00:00Z",
+  "transactionHash": "abc123...",
+  "amount": "50.0000000",
+  "assetCode": "USDC",
+  "assetIssuer": "GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+  "sender": "GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5",
+  "receiver": "GAAZI4TCR3TY5OJHCTJC2A4QSY6CJWJH5IAJTGKIN2ER7LBNVKOCCWN"
+}
+```
+
+**Client example (browser):**
+```javascript
+const es = new EventSource('/stream/payments/GAAZI4TCR3TY5OJHCTJC2A4QSY6CJWJH5IAJTGKIN2ER7LBNVKOCCWN');
+
+es.addEventListener('connected', (e) => {
+  console.log('Stream open:', JSON.parse(e.data));
+});
+
+es.addEventListener('payment', (e) => {
+  const payment = JSON.parse(e.data);
+  console.log(`${payment.sender} → ${payment.receiver}: ${payment.amount} ${payment.assetCode}`);
+});
+
+es.addEventListener('error', (e) => {
+  console.error('Stream error:', JSON.parse(e.data));
+  es.close();
+});
+```
+
+---
+
 ### `WS /stream/ledgers`
 Establishes a live, real-time WebSocket connection to stream Stellar ledger updates. As new ledgers are closed on the Stellar blockchain, the API receives them via the Stellar Horizon SDK subscription, parses them, and immediately broadcasts them to connected WebSocket clients.
 

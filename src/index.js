@@ -17,7 +17,11 @@ const feeEstimateRouter = require("./routes/feeEstimate");
 const accountRouter = require("./routes/account");
 const transactionsRouter = require("./routes/transactions");
 const assetRouter = require("./routes/asset");
+<<<<<<< Updated upstream
 const streamRouter = require("./routes/stream");
+=======
+const streamPaymentsRouter = require("./routes/streamPayments");
+>>>>>>> Stashed changes
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -54,7 +58,11 @@ app.use("/fee-estimate", feeEstimateRouter);
 app.use("/account", accountRouter);
 app.use("/transactions", transactionsRouter);
 app.use("/asset", assetRouter);
+<<<<<<< Updated upstream
 app.use("/stream", streamRouter);
+=======
+app.use("/stream/payments", streamPaymentsRouter);
+>>>>>>> Stashed changes
 
 // ── Root ─────────────────────────────────────────────────────────────────────
 app.get("/", (req, res) => {
@@ -77,7 +85,8 @@ app.get("/", (req, res) => {
         { method: "GET", path: "/transactions/:id/operations",      description: "Operation history for an account" },
         { method: "GET", path: "/asset/:code/:issuer",              description: "Asset metadata and statistics" },
         { method: "GET", path: "/asset/search?code=:code",          description: "Search assets by code across all issuers" },
-        { method: "WS",  path: "/stream/ledgers",                  description: "Real-time stream of live Stellar ledger updates" },
+        { method: "SSE", path: "/stream/payments/:id",              description: "Real-time SSE stream of payment operations for an account" },
+        { method: "WS",  path: "/stream/ledgers",                   description: "Real-time stream of live Stellar ledger updates" },
       ],
       docs: "https://github.com/stellarkit-lab-devtools/stellarkit-api#readme",
     },
