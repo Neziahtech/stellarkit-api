@@ -17,15 +17,8 @@ const feeEstimateRouter = require("./routes/feeEstimate");
 const accountRouter = require("./routes/account");
 const transactionsRouter = require("./routes/transactions");
 const assetRouter = require("./routes/asset");
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 const streamRouter = require("./routes/stream");
-=======
 const streamPaymentsRouter = require("./routes/streamPayments");
->>>>>>> Stashed changes
-=======
-const streamPaymentsRouter = require("./routes/streamPayments");
->>>>>>> Stashed changes
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -62,15 +55,8 @@ app.use("/fee-estimate", feeEstimateRouter);
 app.use("/account", accountRouter);
 app.use("/transactions", transactionsRouter);
 app.use("/asset", assetRouter);
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 app.use("/stream", streamRouter);
-=======
 app.use("/stream/payments", streamPaymentsRouter);
->>>>>>> Stashed changes
-=======
-app.use("/stream/payments", streamPaymentsRouter);
->>>>>>> Stashed changes
 
 // ── Root ─────────────────────────────────────────────────────────────────────
 app.get("/", (req, res) => {
